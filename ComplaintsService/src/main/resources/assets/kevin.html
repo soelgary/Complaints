@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Complaints</title>
+  </head>
+
+
+  <body>
+    <h1>Complaining</h1>
+    <div id='complaint'>
+      <textarea id='textarea' rows="4" cols="50" placeholder="Enter your complaint here..."></textarea>
+      <input type='submit' onclick='submitComplaint()'></input>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
+    <script>
+      var Complaint = Backbone.Model.extend({
+        url: 'http://complaints.gsoeller.com/api/complaints'
+      });
+
+      function submitComplaint() {
+        var text = $('#textarea').val();
+        var date = new Date();
+        var complaint = new Complaint();
+        complaint.save({'text': text, 'time': date}, { success: function(response) {
+          $('#complaint').append('<p>Complaint submitted successfully</p>')
+        }});
+      }
+    </script>
+  </body>
+</html>
